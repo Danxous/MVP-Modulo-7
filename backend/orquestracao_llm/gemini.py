@@ -3,7 +3,7 @@
 import logging
 import os
 
-from .rag import Chunk
+from busca_semantica.motor_de_busca import Chunk
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,7 @@ def offline_answer(sources: list[tuple[Chunk, float]]) -> str:
     if not sources:
         return (
             "**Modo offline** (sem `GEMINI_API_KEY`). Não encontrei trechos relevantes na base de conhecimento. "
-            "Tente reformular a pergunta ou adicione documentos em `backend/knowledge/`."
+            "Tente reformular a pergunta ou adicione documentos em `backend/busca_semantica/base_de_conhecimento/`."
         )
     parts = ["**Modo offline** (sem `GEMINI_API_KEY`). Estes são os trechos mais relevantes encontrados:"]
     for chunk, _ in sources:

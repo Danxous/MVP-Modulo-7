@@ -158,7 +158,7 @@ function AssistantAnswer({ message, onCopy }: { message: Message; onCopy: (text:
   );
 }
 
-export default function App() {
+export default function AssistenteConversacional() {
   const [dark, setDark] = useState(() => localStorage.getItem("theme") === "dark");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profile, setProfile] = useState("Desenvolvedor");

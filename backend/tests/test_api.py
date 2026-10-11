@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
-from app.main import app
-from app.rag import KnowledgeBase, cosine_similarity, split_into_chunks
+from assistente_conversacional.api import app
+from busca_semantica.motor_de_busca import KnowledgeBase, cosine_similarity, split_into_chunks
 
 client = TestClient(app)
 
@@ -46,7 +46,7 @@ def test_chat_keeps_history_and_returns_sources(monkeypatch):
 
 
 def test_feedback_is_saved(tmp_path, monkeypatch):
-    monkeypatch.setattr("app.main.FEEDBACK_FILE", tmp_path / "feedback.jsonl")
+    monkeypatch.setattr("assistente_conversacional.api.FEEDBACK_FILE", tmp_path / "feedback.jsonl")
     answer = client.post("/api/chat", json={"message": "dark mode"}).json()["message"]
     assert client.post("/api/feedback", json={"message_id": answer["id"], "value": "up"}).status_code == 200
     assert (tmp_path / "feedback.jsonl").read_text().count('"up"') == 1
