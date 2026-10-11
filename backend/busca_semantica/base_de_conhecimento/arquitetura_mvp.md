@@ -3,11 +3,17 @@
 ## Visão geral
 - **Frontend**: React + TypeScript (Vite), em `frontend/`. Interface de chat baseada no protótipo do Figma e no Guia de Identidade Visual do Módulo 6.
 - **Backend**: Python + FastAPI, em `backend/`. Expõe a API REST usada pelo chat.
+- **Screaming Architecture**: as pastas têm o nome das capacidades do módulo, não de camadas técnicas:
+  - `backend/assistente_conversacional/api.py`: assistente conversacional via RAG (chat, conversas, feedback).
+  - `backend/busca_semantica/motor_de_busca.py`: mecanismo de busca semântica.
+  - `backend/orquestracao_llm/gemini.py`: orquestração de chamadas ao LLM.
+  - `frontend/src/assistente_conversacional/`: tela do chat e cliente da API.
+  - `frontend/src/identidade_visual/tokens.css`: tokens do guia visual.
 - **LLM**: Google Gemini (`gemini-2.5-flash`) via biblioteca `google-genai`. A chave `GEMINI_API_KEY` fica só no backend (arquivo `.env`, fora do git). Sem chave, o assistente funciona em modo offline e devolve apenas os trechos encontrados.
 
 ## Fluxo de uma pergunta
 1. O usuário envia a pergunta pelo chat (`POST /api/chat`) com o perfil (Desenvolvedor, Product Owner ou Gerente de Projetos) e a temperatura.
-2. O backend faz a busca semântica na base de conhecimento (`backend/knowledge/`).
+2. O backend faz a busca semântica na base de conhecimento (`backend/busca_semantica/base_de_conhecimento/`).
 3. Os 3 trechos mais similares, o histórico da conversa e a pergunta são enviados ao Gemini.
 4. A resposta volta em markdown junto com as fontes consultadas e o percentual de similaridade.
 5. Se o LLM falhar, o usuário recebe uma mensagem amigável no lugar de um erro técnico.
@@ -16,7 +22,7 @@
 - **Chunking**: cada arquivo é dividido em blocos de 30 linhas com sobreposição de 5 linhas.
 - **Embeddings**: vetores TF-IDF gerados localmente (sem custo de API).
 - **Similaridade**: similaridade de cosseno entre o vetor da pergunta e o vetor de cada bloco.
-- Para adicionar conhecimento, coloque arquivos `.md`, `.txt`, `.py`, `.ts`, `.tsx` etc. em `backend/knowledge/` e reinicie o backend.
+- Para adicionar conhecimento, coloque arquivos `.md`, `.txt`, `.py`, `.ts`, `.tsx` etc. em `backend/busca_semantica/base_de_conhecimento/` e reinicie o backend.
 
 ## Endpoints
 | Método | Rota | Descrição |

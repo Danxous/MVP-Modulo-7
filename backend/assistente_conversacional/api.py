@@ -10,13 +10,13 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from . import llm
-from .rag import KnowledgeBase
+from busca_semantica.motor_de_busca import KnowledgeBase
+from orquestracao_llm import gemini
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-KNOWLEDGE_DIR = Path(os.getenv("KNOWLEDGE_DIR", BASE_DIR / "knowledge"))
+KNOWLEDGE_DIR = Path(os.getenv("KNOWLEDGE_DIR", BASE_DIR / "busca_semantica" / "base_de_conhecimento"))
 FEEDBACK_FILE = Path(os.getenv("FEEDBACK_FILE", BASE_DIR / "data" / "feedback.jsonl"))
 
 app = FastAPI(title="MackAI - Módulo 7")
@@ -65,7 +65,7 @@ def summary(conversation: dict) -> dict:
 def health():
     return {
         "status": "ok",
-        "llm": "gemini" if llm.is_enabled() else "offline",
+        "llm": "gemini" if gemini.is_enabled() else "offline",
         "documents": knowledge.documents,
         "chunks": len(knowledge.chunks),
         "indexed_at": indexed_at.isoformat(),
@@ -104,7 +104,7 @@ def chat(request: ChatRequest):
     answer = {
         "id": str(uuid.uuid4()),
         "role": "assistant",
-        "content": llm.generate_answer(question, request.profile, request.temperature, results, history),
+        "content": gemini.generate_answer(question, request.profile, request.temperature, results, history),
         "sources": [
             {"path": c.path, "start_line": c.start_line, "end_line": c.end_line,
              "similarity": round(score, 2), "excerpt": c.text[:300]}

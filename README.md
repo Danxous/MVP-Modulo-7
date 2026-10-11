@@ -3,9 +3,35 @@
 Assistente conversacional com busca semântica (RAG) sobre o código, a documentação e o backlog do projeto, com orquestração de chamadas ao LLM (Gemini).
 
 - **Backend:** Python + FastAPI (`backend/`)
-- **Frontend:** React + TypeScript + Vite (`frontend/`), baseado no protótipo do Figma e no Guia de Identidade Visual do Módulo 6 (`frontend/src/tokens.css`)
+- **Frontend:** React + TypeScript + Vite (`frontend/`), baseado no protótipo do Figma e no Guia de Identidade Visual do Módulo 6 (`frontend/src/identidade_visual/tokens.css`)
 
-Detalhes da arquitetura e dos endpoints: [`backend/knowledge/arquitetura_mvp.md`](backend/knowledge/arquitetura_mvp.md).
+Detalhes da arquitetura e dos endpoints: [`backend/busca_semantica/base_de_conhecimento/arquitetura_mvp.md`](backend/busca_semantica/base_de_conhecimento/arquitetura_mvp.md).
+
+## Arquitetura (Screaming Architecture)
+As pastas são organizadas pelas capacidades do Módulo 7, e não por camadas técnicas. Só de olhar a estrutura dá para saber o que o sistema faz:
+
+```
+backend/
+├── assistente_conversacional/   # Assistente conversacional via RAG: API de chat, conversas e feedback
+│   └── api.py
+├── busca_semantica/             # Mecanismo de busca semântica: chunking, embeddings e similaridade
+│   ├── motor_de_busca.py
+│   └── base_de_conhecimento/    # Documentos indexados pelo RAG
+├── orquestracao_llm/            # Orquestração de chamadas ao LLM (Gemini) e modo offline
+│   └── gemini.py
+└── tests/
+
+frontend/src/
+├── main.tsx                     # Ponto de entrada
+├── assistente_conversacional/   # Tela do chat, cliente da API e estilos
+│   ├── AssistenteConversacional.tsx
+│   ├── api.ts
+│   └── assistente.css
+└── identidade_visual/           # Tokens do Guia de Identidade Visual (Módulo 6)
+    └── tokens.css
+```
+
+Regra de dependência: `assistente_conversacional` usa `busca_semantica` e `orquestracao_llm`; `orquestracao_llm` usa apenas `busca_semantica`; `busca_semantica` não depende de nenhuma outra pasta.
 
 ## Como rodar
 
@@ -18,7 +44,7 @@ python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env             # coloque sua GEMINI_API_KEY (opcional)
-uvicorn app.main:app --reload
+uvicorn assistente_conversacional.api:app --reload
 ```
 Sem `GEMINI_API_KEY`, o assistente roda em **modo offline**: faz a busca semântica e devolve os trechos mais relevantes, sem gerar texto com IA.
 
@@ -38,7 +64,7 @@ pytest
 ```
 
 ## Base de conhecimento
-Os arquivos de `backend/knowledge/` são indexados quando o backend inicia. Para o assistente responder sobre o código e a documentação de vocês, copie os arquivos (`.md`, `.txt`, `.py`, `.ts`, `.tsx`, `.sql`...) para essa pasta e reinicie o backend.
+Os arquivos de `backend/busca_semantica/base_de_conhecimento/` são indexados quando o backend inicia. Para o assistente responder sobre o código e a documentação de vocês, copie os arquivos (`.md`, `.txt`, `.py`, `.ts`, `.tsx`, `.sql`...) para essa pasta e reinicie o backend.
 
 ## User Stories atendidas
 | Funcionalidade | US |

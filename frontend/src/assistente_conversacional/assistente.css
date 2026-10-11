@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
-@import "./tokens.css";
+@import "../identidade_visual/tokens.css";
 
 * { box-sizing: border-box; }
 html, body, #root { min-height: 100%; margin: 0; }
