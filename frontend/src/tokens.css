@@ -1,0 +1,39 @@
+/* tokens.css — Guia de Identidade Visual (Módulo 6). Use sempre var(--token), nunca o hex direto. */
+:root {
+  --color-primary: #1e2a5a;
+  --color-primary-hover: #2f3f7f;
+  --color-brand-accent: #c8102e;
+  --color-bg: #f6f7fa;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f9fafc;
+  --color-border: #e2e5ec;
+  --color-text: #1a1d29;
+  --color-text-muted: #5b6275;
+  --color-priority-critical: #dc2626;
+  --color-priority-high: #ea580c;
+  --color-priority-medium: #b45309;
+  --color-priority-low: #64748b;
+  --color-success: #16a34a;
+  --chart-1: #3b5bdb;
+  --chart-2: #0ea5a4;
+  --chart-3: #8b5cf6;
+  --chart-4: #f59e0b;
+  --chart-5: #ec4899;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --text-xs: 12px; --text-sm: 14px; --text-md: 16px;
+  --text-lg: 20px; --text-xl: 24px; --text-2xl: 32px;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --color-bg: #0f1220;
+  --color-surface: #181c2e;
+  --color-surface-soft: #131728;
+  --color-border: #2a2f45;
+  --color-text: #e8eaf2;
+  --color-text-muted: #9aa0b4;
+  --color-primary: #3f52a1;
+  --color-primary-hover: #5368bd;
+  color-scheme: dark;
+}

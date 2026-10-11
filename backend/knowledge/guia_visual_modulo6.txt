@@ -1,0 +1,337 @@
+P R O J E T O D E E N G E N H A R I A D E S O F T WA R E C O M M I C R O S S E R V I Ç O S · 2 0 2 6 - 2
+
+
+
+Guia de Identidade Visual
+Módulo 6
+Dashboard, Central de Notificações e Comunicação — paleta de cores, tipografia e tokens para
+o MVP
+
+
+
+
+00 Por que essas decisões
+O Módulo 6 é o portal central da plataforma: é por ele que os usuários veem o trabalho de todos os outros
+módulos. Por isso o visual precisa servir a turma inteira e deixar a urgência dos alertas imediatamente clara.
+
+
+   1. Parte da identidade do projeto. Azul-marinho e vermelho Mackenzie, as mesmas cores da
+   apresentação da disciplina.
+
+
+
+   2. Vermelho é reservado para alertas críticos. Se o vermelho também fosse a cor dos botões, o usuário
+   perderia a noção do que é urgente. Por isso a cor de ação é o azul-marinho e o vermelho Mackenzie
+   aparece só no logo.
+
+
+
+   3. Cor indica prioridade; ícone indica origem. A IA de priorização define a cor do alerta. O módulo de
+   origem (Code Review, GitHub, Curadoria, RAG) aparece como ícone e rótulo. Se cada módulo tivesse sua
+   própria cor, o hub viraria um arco-íris e a prioridade se perderia.
+
+
+
+   4. Acessível por padrão. Todo texto sobre fundos neutros passa no critério WCAG AA, nos modos claro e
+   escuro. Laranja (Alta) e verde (Sucesso) têm contraste menor: use-os em bordas, ícones e selos em
+   negrito, nunca em texto corrido.
+
+
+
+   5. Compartilhável. Os valores estão em tokens CSS (seção 05) para que os outros grupos possam adotar
+   o mesmo padrão sem retrabalho.
+
+
+
+
+Módulo 6 · Guia de Identidade Visual · v1.0 · outubro/2026
+01 Cores da marca
+Base da interface. O azul-marinho é a cor de ação; o vermelho Mackenzie é decorativo.
+
+
+
+
+  #1E2A5A                                      #2F3F7F                                      #C8102E
+
+  Primária                                     Primária hover                               Acento Mackenzie
+  --color-primary                              --color-primary-hover                        --color-brand-accent
+  Navbar, botões principais, links             Hover, item ativo do menu                    Somente logo e detalhes de marca
+  Contraste c/ branco: 13.7:1 AAA              Contraste c/ branco: 9.8:1 AAA               Contraste c/ branco: 5.9:1 AA
+
+
+
+
+02 Neutros
+Fundos, superfícies, bordas e texto. Cada token tem um valor para o modo claro e outro para o escuro.
+
+                                                    Modo claro                                 Modo escuro
+
+Fundo
+--color-bg                                             #F6F7FA                                    #0F1220
+Fundo da página
+
+Superfície
+--color-surface                                        #FFFFFF                                    #181C2E
+Cards, painéis, modais
+
+Borda
+--color-border                                         #E2E5EC                                    #2A2F45
+Divisórias e contornos
+
+Texto
+--color-text                                           #1A1D29                                    #E8EAF2
+Texto principal
+
+Texto secundário
+--color-text-muted                                     #5B6275                                    #9AA0B4
+Legendas, timestamps
+
+Contraste do texto sobre a superfície — claro: principal 16.8:1, secundário 6.1:1 · escuro: principal 14.0:1, secundário 6.5:1. Todos
+passam WCAG AA.
+
+
+
+
+Módulo 6 · Guia de Identidade Visual · Cores
+03 Prioridade de notificações
+Saída da IA de priorização. Cada nível tem uma única cor, usada na borda do card e no selo de prioridade.
+
+
+
+
+  #DC2626                                           #EA580C                                #B45309
+
+  Crítica                                           Alta                                   Média
+  --color-priority-critical                         --color-priority-high                  --color-priority-medium
+  Falha de segurança, build quebrado                Review pedindo mudanças, PR            Comentário em PR, gargalo
+  em main                                           bloqueado                              detectado
+  Contraste c/ branco: 4.8:1 AA                     Contraste c/ branco: 3.6:1 AA grande   Contraste c/ branco: 5.0:1 AA
+
+
+
+
+  #64748B                                           #16A34A
+
+  Baixa                                             Sucesso
+  --color-priority-low                              --color-success
+  Notícias e sugestões da curadoria                 Review aprovado, deploy concluído
+  Contraste c/ branco: 4.8:1 AA                     Contraste c/ branco: 3.3:1 AA grande
+
+
+
+Exemplo no hub de notificações
+
+
+        CRÍTICA      ⚙ Code Review                                                                                         há 2 min
+
+       Credencial exposta em config/settings.py
+       O PR #42 feat/auth-refresh adiciona uma chave de API em texto puro.
+
+
+
+        ALTA      ☍ GitHub                                                                                                   há 1 h
+
+       PR #38 aguardando revisão há 3 dias
+       Bloqueia a US-12 da sprint atual.
+
+
+
+        BAIXA      ★ Curadoria                                                                                               ontem
+
+       FastAPI 0.120 lançado
+       Inclui melhorias de validação relevantes para a stack do projeto.
+
+
+
+
+No modo escuro
+
+
+        ALTA      ☍ GitHub                                                                                                   há 1 h
+
+      PR #38 aguardando revisão há 3 dias
+      Bloqueia a US-12 da sprint atual.
+
+
+
+
+Módulo 6 · Guia de Identidade Visual · Prioridade
+04 Cores dos gráficos
+Para métricas do dashboard (commits, PRs, reviews, User Stories). Escolhidas para não colidir com as cores de
+prioridade. Use na ordem abaixo.
+
+
+
+
+--chart-1                    --chart-2                    --chart-3                  --chart-4                  --chart-5
+#3B5BDB                      #0EA5A4                      #8B5CF6                    #F59E0B                    #EC4899
+
+
+
+   Exemplo · PRs por semana
+
+   Série 1                                                            62
+
+   Série 2                                                            48
+
+   Série 3                                                            35
+
+   Série 4                                                            27
+
+   Série 5                                                            18
+
+
+
+
+05 Tipografia
+Duas famílias, ambas gratuitas no Google Fonts.
+
+
+  I N T E R FAC E                                                          CÓDIGO
+
+
+  Inter                                                                    JetBrains Mono
+  Toda a interface: títulos, textos, botões, números. Alta                 Trechos de código nos alertas de code review, nomes de
+  legibilidade em telas e tamanhos pequenos.                               branches, hashes de commit.
+
+  ABCDEFGHIJKLM                                                            ABCDEFGHIJKLM
+  abcdefghijklm                                                            abcdefghijklm
+  0123456789 ãçéõ                                                          0O 1lI {} -> -=
+
+
+
+Pesos da Inter
+
+
+  Aa                                             Aa                                          Aa
+  400 · Regular                                  500 · Medium                                600 · SemiBold
+  Corpo de texto                                 Botões, rótulos                             Títulos, números
+
+
+
+
+Módulo 6 · Guia de Identidade Visual · Gráficos e Tipografia
+06 Escala tipográfica
+ 32px
+ peso 600
+              Display / título da página
+                                              Dashboard do Projeto
+ 24px
+ peso 600
+              H1 / título de seção            Notificações recentes
+ 20px
+ peso 600
+              H2 / título de card             Pull Requests abertos
+
+ 16px
+ peso 500
+              Corpo destacado / botões        Marcar todas como lidas
+
+ 14px
+              Corpo padrão                    O módulo de Code Review comentou no seu PR.
+ peso 400
+
+
+ 12px         Legenda / timestamp /
+                                              há 5 minutos · Curadoria
+ peso 500     rótulo
+
+
+
+Números do dashboard: use algarismos tabulares
+Com font-variant-numeric: tabular-nums , todos os dígitos têm a mesma largura, e as métricas não
+"dançam" quando os valores mudam em tempo real.
+
+  padrão (proporcional)                                              tabular-nums ✓
+
+
+  1.111                                                              1.111
+  8.888                                                              8.888
+
+Código em alertas de code review
+
+   # src/auth/token.py — linha 18
+   def refresh_token(user_id: str) -> str:
+         secret = "sk_live_8f2a--."                 # ⚠ credencial exposta
+         return sign(user_id, secret)
+
+
+
+
+Módulo 6 · Guia de Identidade Visual · Tipografia
+07 Tokens prontos para o código
+Copie para tokens.css no repositório. Em Tailwind, mapeie os mesmos nomes em theme.extend.colors .
+
+
+   -* tokens.css — Módulo 6 -/
+   :root {
+     -* Marca -/
+     --color-primary:        #1E2A5A;
+       --color-primary-hover:        #2F3F7F;
+       --color-brand-accent:         #C8102E;   -* só logo -/
+
+       -* Neutros (claro) -/
+       --color-bg:                   #F6F7FA;
+       --color-surface:              #FFFFFF;
+       --color-border:               #E2E5EC;
+       --color-text:                 #1A1D29;
+       --color-text-muted:           #5B6275;
+
+       -* Prioridade -/
+       --color-priority-critical: #DC2626;
+       --color-priority-high:            #EA580C;
+       --color-priority-medium:          #B45309;
+       --color-priority-low:             #64748B;
+       --color-success:                  #16A34A;
+
+       -* Gráficos -/
+       --chart-1: #3B5BDB; --chart-2: #0EA5A4; --chart-3: #8B5CF6;
+       --chart-4: #F59E0B; --chart-5: #EC4899;
+
+
+       -* Tipografia -/
+       --font-sans: "Inter", system-ui, sans-serif;
+       --font-mono: "JetBrains Mono", ui-monospace, monospace;
+       --text-xs: 12px; --text-sm: 14px; --text-md: 16px;
+       --text-lg: 20px; --text-xl: 24px; --text-2xl: 32px;
+   }
+
+   [data-theme="dark"] {
+     --color-bg:         #0F1220;
+     --color-surface:    #181C2E;
+     --color-border:     #2A2F45;
+     --color-text:       #E8EAF2;
+     --color-text-muted: #9AA0B4;
+   }
+
+   .metric { font-variant-numeric: tabular-nums; }
+
+
+
+
+Módulo 6 · Guia de Identidade Visual · Tokens
+08 Regras de uso
+
+Faça
+ • Use o azul-marinho #1E2A5A para todas as ações primárias (botões, links, item ativo).
+ • Use as cores de prioridade apenas para comunicar urgência: borda do card, selo e contador de não lidas.
+ • Identifique o módulo de origem da notificação com ícone + rótulo em texto secundário.
+ • Aplique tabular-nums em todo número que se atualiza em tempo real.
+ • Referencie sempre os tokens ( var(--color-primary) ), nunca o hex direto no componente.
+
+Evite
+ • Botões ou destaques em vermelho: o vermelho significa "crítico".
+ • Uma cor diferente para cada módulo da plataforma.
+ • Cores de gráfico para comunicar status; cores de prioridade em gráficos.
+ • Pesos abaixo de 400 ou texto menor que 12 px.
+ • JetBrains Mono em textos corridos: ela é só para código.
+
+Próximos passos
+ • Compartilhar este guia com os demais grupos para unificar o visual da plataforma.
+ • Adicionar os tokens ao repositório antes de começar os componentes do MVP.
+
+
+
+
+Módulo 6 · Guia de Identidade Visual · Regras
+
