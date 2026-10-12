@@ -24,11 +24,13 @@ jobs:
           node-version: '24.x'
 
       - name: npm install, build, and test
+        env:
+          VITE_API_URL: "https://mvp-modulo7.azurewebsites.net"
         run: |
           cd frontend
           npm install
           npm run build --if-present
-
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
