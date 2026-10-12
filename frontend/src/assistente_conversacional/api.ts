@@ -12,8 +12,12 @@ export type Message = {
 export type ConversationSummary = { id: string; title: string; created_at: string };
 export type Health = { status: string; llm: "gemini" | "offline"; documents: number; chunks: number; indexed_at: string };
 
+// Captura a URL do backend injetada pelo Vite ou usa o localhost como alternativa de desenvolvimento
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(path, { headers: { "Content-Type": "application/json" }, ...init });
+  const url = `${API_BASE_URL}${path}`;
+  const response = await fetch(url, { headers: { "Content-Type": "application/json" }, ...init });
   if (!response.ok) throw new Error(`Erro ${response.status}`);
   return response.json();
 }
