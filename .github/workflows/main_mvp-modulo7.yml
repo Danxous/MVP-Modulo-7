@@ -56,15 +56,16 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D3F0FC9243664EF2956DBDC0439EC51C }}
 
       - name: Upload artifact for deployment jobs
-    uses: actions/upload-artifact@v4
-    with:
-      name: python-app
-      path: backend/
+        uses: actions/upload-artifact@v4
+        with:
+            name: python-app
+            path: backend/
 
-  # (No job de deploy, garanta que o pacote aponte para o diretório atual do artefato baixado)
-  - name: 'Deploy to Azure Web App'
-    uses: azure/webapps-deploy@v3
-    id: deploy-to-webapp
-    with:
-      app-name: 'MVP-Modulo7'
-      package: .
+      # (No job de deploy, garanta que o pacote aponte para o diretório atual do artefato baixado)
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp
+        with:
+          app-name: 'MVP-Modulo7'
+          package: .
+  
