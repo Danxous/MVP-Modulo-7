@@ -13,11 +13,27 @@ from pydantic import BaseModel, Field
 from busca_semantica.motor_de_busca import KnowledgeBase
 from orquestracao_llm import gemini
 
+from fastapi.middleware.cors import CORSMiddleware
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 KNOWLEDGE_DIR = Path(os.getenv("KNOWLEDGE_DIR", BASE_DIR / "busca_semantica" / "base_de_conhecimento"))
 FEEDBACK_FILE = Path(os.getenv("FEEDBACK_FILE", BASE_DIR / "data" / "feedback.jsonl"))
+
+# A URL exata do seu front (sem a barra / no final)
+origens_permitidas = [
+    "http://localhost:5173",
+    "https://mvp-modulo7-front-ahgzdygpbmahapc0.brazilsouth-01.azurewebsites.net"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origens_permitidas,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app = FastAPI(title="MackAI - Módulo 7")
 app.add_middleware(
